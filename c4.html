@@ -1,0 +1,70 @@
+
+<html>
+<head>
+  <title>Simple AGI Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f0f0f0;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    .card {
+      background: white;
+      padding: 15px;
+      margin: 10px auto;
+      max-width: 500px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+    canvas {
+      width: 100%;
+      height: 250px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>AGI Dashboard</h1>
+
+  <div class="card">
+    <h3>Module Status</h3>
+    <ul>
+      <li>Reasoning: Active</li>
+      <li>Vision: Idle</li>
+      <li>Language: Stable</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>AGI Load Chart</h3>
+    <canvas id="agiChart"></canvas>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const ctx = document.getElementById('agiChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['10AM', '11AM', '12PM', '1PM'],
+        datasets: [{
+          label: 'Cognitive Load',
+          data: [20, 35, 50, 40],
+          backgroundColor: '#4f46e5'
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
