@@ -1,0 +1,133 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robotics Dashboard</title>
+    <style>
+        /* CSS styles for the dashboard */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            color: #007bff;
+            text-align: center;
+        }
+        .robot-status, .controls {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .robot-status p {
+            margin: 5px 0;
+        }
+        .controls button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .controls button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Robotics Control Dashboard</h1>
+
+        <div class="robot-status">
+            <h2>Robot Status</h2>
+            <p><strong>Connection:</strong> <span id="connectionStatus">Disconnected</span></p>
+            <p><strong>Battery Level:</strong> <span id="batteryLevel">--%</span></p>
+            <p><strong>Position:</strong> X: <span id="posX">0</span>, Y: <span id="posY">0</span>, Z: <span id="posZ">0</span></p>
+        </div>
+
+        <div class="controls">
+            <h2>Robot Controls</h2>
+            <button onclick="sendCommand('forward')">Forward</button>
+            <button onclick="sendCommand('backward')">Backward</button>
+            <button onclick="sendCommand('left')">Left</button>
+            <button onclick="sendCommand('right')">Right</button>
+            <button onclick="sendCommand('stop')">Stop</button>
+        </div>
+
+        <div class="logs">
+            <h2>Robot Logs</h2>
+            <textarea id="robotLogs" rows="10" cols="50" readonly></textarea>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for dashboard functionality
+        const connectionStatus = document.getElementById('connectionStatus');
+        const batteryLevel = document.getElementById('batteryLevel');
+        const posX = document.getElementById('posX');
+        const posY = document.getElementById('posY');
+        const posZ = document.getElementById('posZ');
+        const robotLogs = document.getElementById('robotLogs');
+
+        // Simulate connection and data updates
+        let isConnected = false;
+        function connectRobot() {
+            isConnected = true;
+            connectionStatus.textContent = 'Connected';
+            connectionStatus.style.color = 'green';
+            logMessage('Robot connected.');
+            updateRobotData(); // Start updating simulated data
+        }
+
+        function disconnectRobot() {
+            isConnected = false;
+            connectionStatus.textContent = 'Disconnected';
+            connectionStatus.style.color = 'red';
+            logMessage('Robot disconnected.');
+        }
+
+        function updateRobotData() {
+            if (isConnected) {
+                batteryLevel.textContent = `${Math.floor(Math.random() * 100)}%`;
+                posX.textContent = (Math.random() * 10).toFixed(2);
+                posY.textContent = (Math.random() * 10).toFixed(2);
+                posZ.textContent = (Math.random() * 10).toFixed(2);
+                setTimeout(updateRobotData, 2000); // Update every 2 seconds
+            }
+        }
+
+        function sendCommand(command) {
+            if (isConnected) {
+                logMessage(`Sending command: ${command}`);
+                // In a real application, this would send data to the robot (e.g., via WebSockets or an API)
+            } else {
+                logMessage('Robot not connected. Cannot send command.');
+            }
+        }
+
+        function logMessage(message) {
+            const now = new Date();
+            robotLogs.value += `[${now.toLocaleTimeString()}] ${message}\n`;
+            robotLogs.scrollTop = robotLogs.scrollHeight; // Scroll to bottom
+        }
+
+        // Initial connection attempt (simulated)
+        setTimeout(connectRobot, 1000);
+    </script>
+</body>
+</html>
